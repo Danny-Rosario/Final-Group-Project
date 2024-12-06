@@ -31,14 +31,35 @@ class SeperateChaining {
         int val = 0;
         int dif = 0;
         int plus = 0;
-
+        int turn = 0;
 
         char[] chars = key.toCharArray();
  
         for(char c : chars){
 
-            int ascii = (int) c;
-            val += ascii;
+            if(turn == 0){
+
+                int ascii = (int) c;
+                val += ascii;
+                turn = 1;
+
+            }
+
+            if(turn == 1){
+
+                int ascii = (int) c;
+                val += ascii*7;
+                turn = 2;
+
+            }
+
+            else{
+
+                int ascii = (int) c;
+                val += ascii*6;
+                turn = 0;
+
+            }
 
         }
 
@@ -74,68 +95,6 @@ class SeperateChaining {
 
     }
  
-    // hash function to map values to key
-    public int hashFunction(String key)
-    {
-
-        int val = 0;
-        int turn = 0;
-        int dif = 0;
-        int plus = 0;
-
-
-        char[] chars = key.toCharArray();
- 
-        for(char c : chars){
-
-            if(turn%2 == 0){
-
-                int ascii = (int) c;
-                val += ascii;
-
-            }
-
-            else{
-
-                double ascii = (int) c;
-                val *= ascii;
-
-            }
-
-        }
-
-        while(dif == 0){
-
-            for (int x : hashtable[val%size]) {
-
-                if(x == val){
-
-                    plus++;
-                    break;
-
-                }
-
-            }
-
-            if(plus > 0){
-
-                val += plus;
-                plus = 0;
-
-            }
-
-            else{
-
-                dif++;
-
-            }
-
-        }
-
-            return (val%size);
-
-    }
- 
     public void insertItem(String key) //insert key into hash table
     {
 
@@ -148,7 +107,7 @@ class SeperateChaining {
 
         words[set] = key;
         values[set] = AsciiVal(key);
-        int index = hashFunction(key); // find the hash index for key
+        int index = AsciiVal(key)%size; // find the hash index for key
         hashtable[index].add(AsciiVal(key)); // insert key into hash table at that index
         hashrepeats[index]++;
 
@@ -245,7 +204,8 @@ class SeperateChaining {
 
         long endTime2 = System.nanoTime();
         System.out.println("Time in Milliseconds: " + ((endTime2 - startTime2) / 1000000));
-        System.out.println(key + " was the " + pos + " word hashed to " + values[set]%size);
+        System.out.println(hashrepeats[values[set]%size]);
+        System.out.println(key + " was hashed to " + values[set]%size + "\nProbe Count: " + pos + "\n");
 
     }
  
@@ -260,7 +220,7 @@ class SeperateChaining {
         arr = new String[466551];
 
         // Create a empty hash table of given size 
-        SeperateChaining h = new SeperateChaining(933102);
+        SeperateChaining h = new SeperateChaining(466551);
 
         File file = new File("C:\\Users\\drago\\OneDrive\\Desktop\\DATA JAVA FILES\\Group Project\\words.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
@@ -272,8 +232,8 @@ class SeperateChaining {
 
         while((st = br.readLine()) != null){
 
-            p++;
-            arr[p] = st;
+            //p++;
+            //arr[p] = st;
             h.insertItem(st);
     
         }
@@ -284,11 +244,70 @@ class SeperateChaining {
 
             br.close();
             long endTime1 = System.nanoTime();
-            System.out.println("Time in Milliseconds: " + ((endTime1 - startTime1) / 1000000));
+            System.out.println("Time for the entire list to hash in Milliseconds: " + ((endTime1 - startTime1) / 1000000));
 
         }
        
+        // for(int i = 204500; i <205000; i++){
+
+        //     System.out.println(h.hashrepeats[i]);
+
+        // }
+
         h.searchHash("bagel");
+        h.searchHash("repurify");
+        h.searchHash("10th");
+        h.searchHash("3D");
+        h.searchHash("ZZZ");
+        h.searchHash("nonrated");
+        h.searchHash("formable");
+        h.searchHash("Batman");
+        h.searchHash("Beach");
+        h.searchHash("farfel");
+
+        h.searchHash("Farida");
+        h.searchHash("Massachusetts");
+        h.searchHash("specify");
+        h.searchHash("kneehole");
+        h.searchHash("harmonize");
+        h.searchHash("five-year");
+        h.searchHash("equipped");
+        h.searchHash("equates");
+        h.searchHash("climatometer");
+        h.searchHash("chancels");
+
+        h.searchHash("7th");
+        h.searchHash("Encrata");
+        h.searchHash("encrusted");
+        h.searchHash("Perley");
+        h.searchHash("reoperates");
+        h.searchHash("reoiled");
+        h.searchHash("unprenticed");
+        h.searchHash("unpreparedly");
+        h.searchHash("unprolix");
+        h.searchHash("zoogeographer");
+
+        h.searchHash("strath");
+        h.searchHash("purposely");
+        h.searchHash("mischief");
+        h.searchHash("horologies");
+        h.searchHash("doorsill");
+        h.searchHash("convenience");
+        h.searchHash("authority");
+        h.searchHash("authored");
+        h.searchHash("antialbumid");
+        h.searchHash("11-point");
+
+        h.searchHash("Congo");
+        h.searchHash("congratulated");
+        h.searchHash("Oligocene");
+        h.searchHash("scissors");
+        h.searchHash("steradian");
+        h.searchHash("swivel");
+        h.searchHash("rill");
+        h.searchHash("nondeferable");
+        h.searchHash("forfeits");
+        h.searchHash("Cyclades");
         
     }
     
