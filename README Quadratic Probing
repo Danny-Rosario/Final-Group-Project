@@ -1,0 +1,12 @@
+My project is used to scan the whole of the file "words.txt", and use quadratic probing to quickly search for words. All of my code is defined within the class QuadraticProbingProject,
+and this is broken up into the main method and supporting methods.
+For my main method, I defined multiple arrays that store our list of words in the different sizes (10, 20, 30 etc..). This made the words list easy to call a search function on. For the
+several word search functions, I built a for loop that runs through every word in the array and tracks the time taken to search as well as the probes.
+One of my methods is readWords, which is used to read the lines of "words.txt" into a hashtable of a given size. This method scans every line of the text file, and performs an insert
+on each line to put it into the hashtable.
+The insert method is called upon for every line in readWords, and what it does is finds a word a hash value in the table and inserts it into the hashtable. If there is a collision in the 
+table and a hash value is taken, method will perform quadratic probing until a free space is found. Is also used to keep track of the total probes.
+I also included the function hash, which takes a word, calls the method that converts it to its ascii sum equivalent, and returns the value mod tablesize to be the hashvalue. This method is internally
+calling the wordToAsciiSum method, which returns the ascii sum for the word given. 
+The most important method is search, which can be called on a single word with the tablesize and hashtable given. This method finds the word based on its ascii sum, and keeps a count of 
+the number of probes. It also starts a timer before the method runs and stops it when the word is found.
